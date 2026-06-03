@@ -358,7 +358,7 @@ function processWeek(rows,start,end){
   const esc=f.filter(r=>isEsc(r)).length;
   const sem=f.filter(r=>(r[C.status]||'').toLowerCase().includes('sem retorno')).length;
   const ag=f.filter(r=>(r[C.status]||'').toLowerCase().includes('aguardando')).length;
-  const escT=f.filter(r=>isEsc(r)).map(r=>parseFloat(r[C.tme])).filter(v=>!isNaN(v)&&v>0);
+  const escT=f.filter(r=>isEsc(r)&&(r[C.status]||'').toLowerCase().includes('conclu')).map(r=>parseFloat(r[C.tme])).filter(v=>!isNaN(v)&&v>0);
   const tmeEsc=escT.length?Math.round(escT.reduce((a,b)=>a+b,0)/escT.length):null;
   const cc={};
   f.forEach(r=>{const c=(r[C.categoria]||'(sem categoria)').trim()||'(sem categoria)';cc[c]=(cc[c]||0)+1;});
