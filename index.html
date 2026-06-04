@@ -131,11 +131,11 @@
         <button class="tab-btn" onclick="switchTab('url')">Link do Google Sheets</button>
       </div>
       <div id="tab-csv" class="tab-panel active">
-        <div class="drop-zone" id="drop-zone" onclick="document.getElementById('csv-input').click()">
+        <label for="csv-input" class="drop-zone" id="drop-zone">
           <div class="dz-icon">📄</div>
           Arraste o CSV aqui ou clique para selecionar
           <div class="hint">Arquivo → Fazer download → Valores separados por vírgula (.csv)</div>
-        </div>
+        </label>
         <input type="file" id="csv-input" accept=".csv" style="display:none">
         <div id="csv-log" class="log"></div>
       </div>
@@ -232,9 +232,9 @@ function switchTab(tab) {
 
 const dz = document.getElementById('drop-zone');
 const fi = document.getElementById('csv-input');
-dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag'); });
-dz.addEventListener('dragleave', () => dz.classList.remove('drag'));
-dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('drag'); if(e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); });
+dz.addEventListener('dragover', e => { e.preventDefault(); e.stopPropagation(); dz.classList.add('drag'); });
+dz.addEventListener('dragleave', e => { e.stopPropagation(); dz.classList.remove('drag'); });
+dz.addEventListener('drop', e => { e.preventDefault(); e.stopPropagation(); dz.classList.remove('drag'); if(e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); });
 fi.addEventListener('change', e => { if(e.target.files[0]) handleFile(e.target.files[0]); });
 
 function handleFile(file) {
@@ -326,7 +326,13 @@ function fmtTime(mins) {
 function normalizeTme(str) {
   if(!str) return '';
   const s = str.trim();
-  return !isNaN(s) ? s + 'min' : s;
+  if(!isNaN(s)) {
+    const mins = parseFloat(s);
+    if(mins < 60) return Math.round(mins) + 'min';
+    const h = Math.floor(mins/60), m = Math.round(mins%60);
+    return m > 0 ? h + 'h ' + m + 'min' : h + 'h';
+  }
+  return s;
 }
 
 function parseTmeToMin(str) {
@@ -420,7 +426,14 @@ function renderTrend(weeks) {
   reversed.forEach((w, i) => {
     const isCurrent = (i === 3);
     const raw = tmes[i] || '';
-    const tmeVal = raw ? (!isNaN(raw) ? raw + 'min' : raw) : 'Sem coleta';
+    let tmeVal = 'Sem coleta';
+    if(raw) {
+      if(!isNaN(raw)) {
+        const mins = parseFloat(raw);
+        if(mins < 60) { tmeVal = Math.round(mins) + 'min'; }
+        else { const h = Math.floor(mins/60), m = Math.round(mins%60); tmeVal = m > 0 ? h + 'h ' + m + 'min' : h + 'h'; }
+      } else { tmeVal = raw; }
+    }
     html += '<tr class="' + (isCurrent ? 'current' : '') + '">' +
       '<td>' + fmtShort(w.start) + ' a ' + fmtShort(w.end) + (isCurrent ? ' ★' : '') + '</td>' +
       '<td>' + w.total + '</td>' +
@@ -546,7 +559,14 @@ function copyReport() {
   lines.push('| --- | --- | --- |');
   reversed.forEach((wk, i) => {
     const raw = tmes[i] || '';
-    const tmeVal = raw ? (!isNaN(raw) ? raw + 'min' : raw) : 'Sem coleta';
+    let tmeVal = 'Sem coleta';
+    if(raw) {
+      if(!isNaN(raw)) {
+        const mins = parseFloat(raw);
+        if(mins < 60) { tmeVal = Math.round(mins) + 'min'; }
+        else { const h = Math.floor(mins/60), m = Math.round(mins%60); tmeVal = m > 0 ? h + 'h ' + m + 'min' : h + 'h'; }
+      } else { tmeVal = raw; }
+    }
     const isCurrent = (i === 3);
     lines.push('| ' + fmt(wk.start) + ' a ' + fmt(wk.end) + (isCurrent ? ' (Atual)' : '') + ' | ' + wk.total + ' | ' + tmeVal + ' |');
   });
