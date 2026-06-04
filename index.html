@@ -132,26 +132,29 @@
     <div class="section-title">1. Dados da planilha</div>
     <div class="card">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-        <div>
-          <div style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text3);font-family:var(--mono);margin-bottom:8px;">📋 Protocolos SAC</div>
-          <label for="csv-input" class="drop-zone" id="drop-zone">
-            <div class="dz-icon">📋</div>
-            <div style="font-size:13px;font-weight:500;">Planilha de protocolos</div>
-            <div class="hint">Clique ou arraste o CSV</div>
+
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text3);font-family:var(--mono);">📋 Protocolos SAC</div>
+          <label for="csv-input" id="drop-zone" style="border:1.5px dashed var(--border);border-radius:var(--radius-sm);padding:2rem 1rem;text-align:center;cursor:pointer;transition:background 0.15s,border-color 0.15s;display:block;">
+            <div style="font-size:26px;margin-bottom:8px;">📋</div>
+            <div style="font-size:13px;font-weight:500;color:var(--text);">Planilha de protocolos</div>
+            <div style="font-size:12px;color:var(--text3);margin-top:4px;">Clique ou arraste o CSV</div>
           </label>
           <input type="file" id="csv-input" accept=".csv" style="display:none">
           <div id="csv-log" class="log"></div>
         </div>
-        <div>
-          <div style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text3);font-family:var(--mono);margin-bottom:8px;">📊 Qualidade</div>
-          <label for="ql-input" class="drop-zone" id="drop-zone-ql">
-            <div class="dz-icon">📊</div>
-            <div style="font-size:13px;font-weight:500;">Planilha de qualidade</div>
-            <div class="hint">Clique ou arraste o CSV</div>
+
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text3);font-family:var(--mono);">📊 Qualidade</div>
+          <label for="ql-input" id="drop-zone-ql" style="border:1.5px dashed var(--border);border-radius:var(--radius-sm);padding:2rem 1rem;text-align:center;cursor:pointer;transition:background 0.15s,border-color 0.15s;display:block;">
+            <div style="font-size:26px;margin-bottom:8px;">📊</div>
+            <div style="font-size:13px;font-weight:500;color:var(--text);">Planilha de qualidade</div>
+            <div style="font-size:12px;color:var(--text3);margin-top:4px;">Clique ou arraste o CSV</div>
           </label>
           <input type="file" id="ql-input" accept=".csv" style="display:none">
           <div id="ql-log" class="log"></div>
         </div>
+
       </div>
     </div>
   </div>
