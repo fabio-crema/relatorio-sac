@@ -128,14 +128,14 @@
     <span class="sub">Kiwipay · gerador semanal</span>
   </header>
 
-  <div class="section">
+    <div class="section">
     <div class="section-title">1. Dados da planilha</div>
     <div class="card">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
         <div>
           <div style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text3);font-family:var(--mono);margin-bottom:8px;">📋 Protocolos SAC</div>
-          <label for="csv-input" class="drop-zone" id="drop-zone" style="padding:1rem;">
-            <div class="dz-icon" style="font-size:22px;margin-bottom:6px;">📋</div>
+          <label for="csv-input" class="drop-zone" id="drop-zone">
+            <div class="dz-icon">📋</div>
             <div style="font-size:13px;font-weight:500;">Planilha de protocolos</div>
             <div class="hint">Clique ou arraste o CSV</div>
           </label>
@@ -144,8 +144,8 @@
         </div>
         <div>
           <div style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text3);font-family:var(--mono);margin-bottom:8px;">📊 Qualidade</div>
-          <label for="ql-input" class="drop-zone" id="drop-zone-ql" style="padding:1rem;display:block;">
-            <div class="dz-icon" style="font-size:22px;margin-bottom:6px;">📊</div>
+          <label for="ql-input" class="drop-zone" id="drop-zone-ql">
+            <div class="dz-icon">📊</div>
             <div style="font-size:13px;font-weight:500;">Planilha de qualidade</div>
             <div class="hint">Clique ou arraste o CSV</div>
           </label>
@@ -153,16 +153,6 @@
           <div id="ql-log" class="log"></div>
         </div>
       </div>
-      <div id="tab-csv">
-        <label for="csv-input" class="drop-zone" id="drop-zone">
-          <div class="dz-icon">📄</div>
-          Arraste o CSV aqui ou clique para selecionar
-          <div class="hint">Arquivo → Fazer download → Valores separados por vírgula (.csv)</div>
-        </label>
-        <input type="file" id="csv-input" accept=".csv" style="display:none">
-        <div id="csv-log" class="log"></div>
-      </div>
-
     </div>
   </div>
 
@@ -265,9 +255,14 @@ let qlData = [];
 
 const dz = document.getElementById('drop-zone');
 const fi = document.getElementById('csv-input');
-dz.addEventListener('dragover', e => { e.preventDefault(); e.stopPropagation(); dz.classList.add('drag'); });
-dz.addEventListener('dragleave', e => { e.stopPropagation(); dz.classList.remove('drag'); });
-dz.addEventListener('drop', e => { e.preventDefault(); e.stopPropagation(); dz.classList.remove('drag'); if(e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); });
+dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag'); });
+dz.addEventListener('dragleave', () => dz.classList.remove('drag'));
+dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('drag'); if(e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); });
+
+const dzql = document.getElementById('drop-zone-ql');
+dzql.addEventListener('dragover', e => { e.preventDefault(); dzql.classList.add('drag'); });
+dzql.addEventListener('dragleave', () => dzql.classList.remove('drag'));
+dzql.addEventListener('drop', e => { e.preventDefault(); dzql.classList.remove('drag'); if(e.dataTransfer.files[0]) handleQLFile(e.dataTransfer.files[0]); });
 fi.addEventListener('change', e => { if(e.target.files[0]) handleFile(e.target.files[0]); });
 
 const qli = document.getElementById('ql-input');
@@ -281,7 +276,7 @@ function handleQLFile(file) {
       qlData = parseCSVGeneric(e.target.result);
       if(!qlData.length) throw new Error('Nenhum dado encontrado.');
 
-      const qlDZ = document.getElementById('drop-zone-ql'); if(qlDZ) qlDZ.innerHTML = '<div class="dz-icon" style="font-size:22px;margin-bottom:6px;">✅</div><div style="font-size:13px;font-weight:500;">' + file.name + '</div><div class="hint">' + qlData.length + ' registros carregados</div>';
+      const qlDZ = document.getElementById('drop-zone-ql'); if(qlDZ) qlDZ.innerHTML = '<div class="dz-icon">✅</div><div style="font-size:13px;font-weight:500;">' + file.name + '</div><div class="hint">' + qlData.length + ' registros carregados</div>';
       setLog('ql', '', 'ok');
       if(currentData) renderQL();
     } catch(err) { setLog('ql', 'Erro: ' + err.message, 'error'); }
@@ -296,7 +291,7 @@ function handleFile(file) {
     try {
       parsedData = parseCSV(e.target.result);
       if(!parsedData.length) throw new Error('Nenhum dado encontrado.');
-      dz.innerHTML = '<div class="dz-icon" style="font-size:22px;margin-bottom:6px;">✅</div><div style="font-size:13px;font-weight:500;">' + file.name + '</div><div class="hint">' + parsedData.length + ' registros carregados</div>';
+      dz.innerHTML = '<div class="dz-icon">✅</div><div style="font-size:13px;font-weight:500;">' + file.name + '</div><div class="hint">' + parsedData.length + ' registros carregados</div>';
       setLog('csv', '', 'ok');
       initWeeks(parsedData);
     } catch(err) { setLog('csv', 'Erro: ' + err.message, 'error'); }
