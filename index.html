@@ -26,12 +26,6 @@
   .section { margin-bottom: 2.5rem; }
   .section-title { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); margin-bottom: 12px; font-family: var(--mono); }
   .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; }
-  .tabs { display: flex; gap: 4px; margin-bottom: 14px; border-bottom: 1px solid var(--border); }
-  .tab-btn { background: none; border: none; border-bottom: 2px solid transparent; border-radius: 0; padding: 6px 14px 10px; font-size: 13px; font-weight: 500; color: var(--text2); cursor: pointer; transition: color 0.15s; margin-bottom: -1px; }
-  .tab-btn:hover { color: var(--text); }
-  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
-  .tab-panel { display: none; }
-  .tab-panel.active { display: block; }
   .input-group { display: flex; gap: 8px; }
   .input-group input { flex: 1; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 14px; font-family: var(--sans); background: var(--bg); color: var(--text); outline: none; transition: border-color 0.15s; }
   .input-group input:focus { border-color: var(--accent); }
@@ -159,11 +153,7 @@
           <div id="ql-log" class="log"></div>
         </div>
       </div>
-      <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('csv')">Upload CSV</button>
-        <button class="tab-btn" onclick="switchTab('url')">Link do Google Sheets</button>
-      </div>
-      <div id="tab-csv" class="tab-panel active">
+      <div id="tab-csv">
         <label for="csv-input" class="drop-zone" id="drop-zone">
           <div class="dz-icon">📄</div>
           Arraste o CSV aqui ou clique para selecionar
@@ -172,17 +162,7 @@
         <input type="file" id="csv-input" accept=".csv" style="display:none">
         <div id="csv-log" class="log"></div>
       </div>
-      <div id="tab-url" class="tab-panel">
-        <div class="input-group">
-          <input type="text" id="sheets-url" placeholder="Cole aqui o link da planilha" />
-          <button class="btn-load" id="load-btn" onclick="loadSheet()">Carregar</button>
-        </div>
-        <div id="url-log" class="log"></div>
-        <div class="info-box">
-          A planilha precisa estar com acesso <strong>"Qualquer pessoa com o link pode visualizar"</strong>.<br>
-          Sheets → Compartilhar → Alterar para qualquer pessoa com o link → Leitor.
-        </div>
-      </div>
+
     </div>
   </div>
 
@@ -283,12 +263,6 @@ let currentData = null;
 let weeksData = [];
 let qlData = [];
 
-function switchTab(tab) {
-  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', (i===0&&tab==='csv')||(i===1&&tab==='url')));
-  document.getElementById('tab-csv').classList.toggle('active', tab==='csv');
-  document.getElementById('tab-url').classList.toggle('active', tab==='url');
-}
-
 const dz = document.getElementById('drop-zone');
 const fi = document.getElementById('csv-input');
 dz.addEventListener('dragover', e => { e.preventDefault(); e.stopPropagation(); dz.classList.add('drag'); });
@@ -330,29 +304,7 @@ function handleFile(file) {
   reader.readAsText(file, 'UTF-8');
 }
 
-function extractSheetId(url) { const m = url.match(/\/spreadsheets\/d\/([a-zA-Z0-9_-]+)/); return m ? m[1] : null; }
-function extractGid(url) { const m = url.match(/[#&?]gid=(\d+)/); return m ? m[1] : '0'; }
 
-async function loadSheet() {
-  const url = document.getElementById('sheets-url').value.trim();
-  if(!url) { setLog('url', 'Cole o link da planilha primeiro.'); return; }
-  const sheetId = extractSheetId(url);
-  if(!sheetId) { setLog('url', 'Link inválido.', 'error'); return; }
-  const csvUrl = 'https://docs.google.com/spreadsheets/d/' + sheetId + '/export?format=csv&gid=' + extractGid(url);
-  const btn = document.getElementById('load-btn');
-  btn.disabled = true; btn.textContent = 'Carregando...';
-  setLog('url', 'Buscando dados...');
-  try {
-    const res = await fetch(csvUrl);
-    if(!res.ok) throw new Error('Sem acesso. Verifique se a planilha está pública via link.');
-    const text = await res.text();
-    parsedData = parseCSV(text);
-    if(!parsedData.length) throw new Error('Nenhum dado encontrado.');
-    btn.textContent = 'Recarregar'; btn.disabled = false;
-    setLog('url', '✓ ' + parsedData.length + ' registros carregados.', 'ok');
-    initWeeks(parsedData);
-  } catch(e) { btn.textContent = 'Carregar'; btn.disabled = false; setLog('url', 'Erro: ' + e.message, 'error'); }
-}
 
 function parseCSV(text) {
   const lines = text.split('\n').filter(l => l.trim());
@@ -868,7 +820,7 @@ function fallbackCopy(text, fb) {
 }
 
 function setLog(type, msg, cls) {
-  const ids = { csv: 'csv-log', url: 'url-log', ql: 'ql-log' };
+  const ids = { csv: 'csv-log', ql: 'ql-log' };
   const el = document.getElementById(ids[type]);
   if(el) { el.textContent = msg; el.className = 'log' + (cls ? ' ' + cls : ''); }
 }
