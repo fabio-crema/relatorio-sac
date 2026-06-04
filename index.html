@@ -113,6 +113,17 @@
   .badge-wait { background: var(--warn-bg); color: var(--warn-text); }
   .badge-none { background: var(--surface2); color: var(--text2); border: 1px solid var(--border); }
   .copy-feedback { font-size: 12px; font-family: var(--mono); color: var(--success-text); margin-top: 8px; min-height: 18px; text-align: center; }
+
+  /* quality upload */
+  .upload-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .ql-metric { background: var(--success-bg); border-radius: var(--radius-sm); padding: 14px; }
+  .ql-metric .lbl { font-size: 11px; color: var(--success-text); font-family: var(--mono); margin-bottom: 4px; opacity: 0.85; }
+  .ql-metric .val { font-size: 28px; font-weight: 600; letter-spacing: -0.5px; color: #1A6B3C; }
+  .ql-warn { background: var(--warn-bg); border-radius: var(--radius-sm); padding: 14px; }
+  .ql-warn .lbl { font-size: 11px; color: var(--warn-text); font-family: var(--mono); margin-bottom: 4px; opacity: 0.85; }
+  .ql-warn .val { font-size: 28px; font-weight: 600; letter-spacing: -0.5px; color: #8A5E00; }
+  .ql-metrics-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+
   hr.divider { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
 </style>
 </head>
@@ -126,6 +137,29 @@
   <div class="section">
     <div class="section-title">1. Dados da planilha</div>
     <div class="card">
+      <div class="upload-grid">
+        <div>
+          <div style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text3);font-family:var(--mono);margin-bottom:10px;">Protocolos SAC</div>
+          <div class="drop-zone" id="drop-zone-ql-proto" style="padding:1.2rem 1rem;" onclick="document.getElementById('csv-input').click()">
+            <div class="dz-icon" style="font-size:20px;margin-bottom:4px;">📋</div>
+            <div style="font-size:13px;">Planilha de protocolos</div>
+            <div class="hint">CSV de atendimentos</div>
+          </div>
+          <input type="file" id="csv-input" accept=".csv" style="display:none">
+          <div id="csv-log" class="log"></div>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text3);font-family:var(--mono);margin-bottom:10px;">Planilha de Qualidade</div>
+          <label for="ql-input" class="drop-zone" style="padding:1.2rem 1rem;display:block;cursor:pointer;">
+            <div class="dz-icon" style="font-size:20px;margin-bottom:4px;">📊</div>
+            <div style="font-size:13px;">Planilha de qualidade</div>
+            <div class="hint">CSV de auditorias</div>
+          </label>
+          <input type="file" id="ql-input" accept=".csv" style="display:none">
+          <div id="ql-log" class="log"></div>
+        </div>
+      </div>
+      <div style="margin-top:14px;">
       <div class="tabs">
         <button class="tab-btn active" onclick="switchTab('csv')">Upload CSV</button>
         <button class="tab-btn" onclick="switchTab('url')">Link do Google Sheets</button>
@@ -149,6 +183,7 @@
           A planilha precisa estar com acesso <strong>"Qualquer pessoa com o link pode visualizar"</strong>.<br>
           Sheets → Compartilhar → Alterar para qualquer pessoa com o link → Leitor.
         </div>
+      </div>
       </div>
     </div>
   </div>
@@ -195,8 +230,33 @@
     </div>
 
     <div class="section">
-      <div class="section-title">🗂️ Amostra de casos — top 10 categorias</div>
+      <div class="section-title">🗂️ Amostra de casos em destaque — top 10 categorias</div>
       <div id="casos-section"></div>
+    </div>
+
+    <div class="section">
+      <div style="background:var(--surface2);border:1px dashed var(--border);border-radius:var(--radius-sm);padding:14px 16px;">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);font-family:var(--mono);margin-bottom:6px;">💡 Análise e Insights</div>
+        <div style="font-size:13px;color:var(--text3);font-style:italic;">Escreva manualmente após copiar o relatório, ou use IA para gerar com base nos dados.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div style="background:var(--surface2);border:1px dashed var(--border);border-radius:var(--radius-sm);padding:14px 16px;">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);font-family:var(--mono);margin-bottom:6px;">🔧 Melhorias da Semana</div>
+        <div style="font-size:13px;color:var(--text3);font-style:italic;">Mapeie no canal #sac-conta-digital do Slack e adicione manualmente após colar no Notion.</div>
+      </div>
+    </div>
+
+    <div class="section" id="ql-section" style="display:none">
+      <div class="section-title">📈 Indicador de Qualidade</div>
+      <div class="card">
+        <div class="ql-metrics-row">
+          <div class="ql-metric"><div class="lbl">QL — qualidade</div><div class="val" id="ql-pct">—</div></div>
+          <div class="ql-warn"><div class="lbl">Ponto de atenção</div><div class="val" id="ql-attn">—</div></div>
+        </div>
+        <div style="font-size:13px;color:var(--text2);line-height:1.6;" id="ql-obs"></div>
+      </div>
     </div>
 
     <hr class="divider">
@@ -223,6 +283,7 @@ const C = {
 let parsedData = [];
 let currentData = null;
 let weeksData = [];
+let qlData = [];
 
 function switchTab(tab) {
   document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', (i===0&&tab==='csv')||(i===1&&tab==='url')));
@@ -236,6 +297,25 @@ dz.addEventListener('dragover', e => { e.preventDefault(); e.stopPropagation(); 
 dz.addEventListener('dragleave', e => { e.stopPropagation(); dz.classList.remove('drag'); });
 dz.addEventListener('drop', e => { e.preventDefault(); e.stopPropagation(); dz.classList.remove('drag'); if(e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); });
 fi.addEventListener('change', e => { if(e.target.files[0]) handleFile(e.target.files[0]); });
+
+const qli = document.getElementById('ql-input');
+qli.addEventListener('change', e => { if(e.target.files[0]) handleQLFile(e.target.files[0]); });
+
+function handleQLFile(file) {
+  if(!file.name.endsWith('.csv')) { setLog('ql', 'Selecione um arquivo .csv', 'error'); return; }
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      qlData = parseCSV(e.target.result);
+      if(!qlData.length) throw new Error('Nenhum dado encontrado.');
+      const lbl = document.getElementById('drop-zone-ql-proto').nextElementSibling;
+      document.querySelector('label[for="ql-input"]').innerHTML = '<div class="dz-icon" style="font-size:20px;margin-bottom:4px;">✅</div><div style="font-size:13px;">' + file.name + '</div><div class="hint">' + qlData.length + ' registros</div>';
+      setLog('ql', '', 'ok');
+      if(currentData) renderQL();
+    } catch(err) { setLog('ql', 'Erro: ' + err.message, 'error'); }
+  };
+  reader.readAsText(file, 'UTF-8');
+}
 
 function handleFile(file) {
   if(!file.name.endsWith('.csv')) { setLog('csv', 'Selecione um arquivo .csv', 'error'); return; }
@@ -417,6 +497,7 @@ function renderAll() {
   renderTMEesc(weeksData[0]);
   renderCats(weeksData[0]);
   renderCases(weeksData[0]);
+  if(qlData.length) renderQL();
 }
 
 function renderTrend(weeks) {
@@ -543,6 +624,49 @@ function toggleCase(idx) {
   arrow.classList.toggle('open', open);
 }
 
+
+function renderQL() {
+  if(!currentData || !qlData.length) return;
+  const w = currentData;
+
+  const weekRows = qlData.filter(r => {
+    const d = parseDate(r['Data'] || r['data'] || '');
+    return d && d >= w.start && d <= w.end;
+  });
+
+  const total = weekRows.length;
+  if(!total) { document.getElementById('ql-section').style.display = 'none'; return; }
+
+  const qlCol = 'QL do Chat';
+  const qlCount = weekRows.filter(r => (r[qlCol] || '').trim().toLowerCase() === 'ql').length;
+  const attnCount = weekRows.filter(r => (r[qlCol] || '').trim().toLowerCase().includes('ponto')).length;
+  const qlPct = Math.round(qlCount / total * 100);
+  const attnPct = Math.round(attnCount / total * 100);
+
+  document.getElementById('ql-pct').textContent = qlPct + '%';
+  document.getElementById('ql-attn').textContent = attnPct + '%';
+
+  // Find prev week
+  const prevStart = new Date(w.start); prevStart.setDate(prevStart.getDate() - 7);
+  const prevEnd = new Date(w.end); prevEnd.setDate(prevEnd.getDate() - 7);
+  const prevRows = qlData.filter(r => { const d = parseDate(r['Data'] || r['data'] || ''); return d && d >= prevStart && d <= prevEnd; });
+  let obsText = 'Encerramos a semana com <strong>' + qlPct + '%</strong> dos atendimentos classificados como QL (Qualidade).';
+  if(attnPct > 0) obsText += ' Os ' + attnPct + '% restantes representam pontos de atenção identificados e acompanhados pela gestão.';
+  if(prevRows.length) {
+    const prevQL = prevRows.filter(r => (r[qlCol] || '').trim().toLowerCase() === 'ql').length;
+    const prevPct = Math.round(prevQL / prevRows.length * 100);
+    if(prevPct !== qlPct) {
+      const dir = qlPct > prevPct ? 'evoluímos' : 'recuamos';
+      obsText += ' Em relação à semana anterior, ' + dir + ' de <strong>' + prevPct + '%</strong> para <strong>' + qlPct + '%</strong> de qualidade.';
+    } else {
+      obsText += ' O índice de qualidade se manteve em <strong>' + qlPct + '%</strong> em relação à semana anterior.';
+    }
+  }
+
+  document.getElementById('ql-obs').innerHTML = obsText;
+  document.getElementById('ql-section').style.display = 'block';
+}
+
 function copyReport() {
   if(!currentData) { document.getElementById('copy-feedback').textContent = 'Carregue os dados primeiro.'; return; }
   const w = currentData;
@@ -619,7 +743,7 @@ function copyReport() {
   w.cats.forEach(([cat, cnt]) => { lines.push('| ' + cat + ' | ' + cnt + ' | ' + pct(cnt, w.total).toFixed(1) + '% |'); });
   lines.push('');
 
-  lines.push('## 🗂️ Amostra de Casos — Top 10 Categorias');
+  lines.push('## 🗂️ Amostra de Casos em Destaque — Top 10 Categorias');
   lines.push('');
   w.top10.forEach(([cat]) => {
     lines.push('### ' + cat);
@@ -637,6 +761,43 @@ function copyReport() {
       lines.push('');
     });
   });
+
+  lines.push('## 💡 Análise e Insights');
+  lines.push('');
+  lines.push('*(escreva os insights aqui)*');
+  lines.push('');
+
+  lines.push('## 🔧 Melhorias da Semana');
+  lines.push('');
+  lines.push('*(mapeie as melhorias do canal #sac-conta-digital aqui)*');
+  lines.push('');
+
+  // QL section
+  if(qlData.length && currentData) {
+    const weekRows = qlData.filter(r => { const d = parseDate(r['Data'] || r['data'] || ''); return d && d >= w.start && d <= w.end; });
+    if(weekRows.length) {
+      const qlCol = 'QL do Chat';
+      const qlCount = weekRows.filter(r => (r[qlCol]||'').trim().toLowerCase() === 'ql').length;
+      const attnCount = weekRows.filter(r => (r[qlCol]||'').trim().toLowerCase().includes('ponto')).length;
+      const qlPct = Math.round(qlCount/weekRows.length*100);
+      const attnPct = Math.round(attnCount/weekRows.length*100);
+      const prevStart = new Date(w.start); prevStart.setDate(prevStart.getDate()-7);
+      const prevEnd = new Date(w.end); prevEnd.setDate(prevEnd.getDate()-7);
+      const prevRows = qlData.filter(r => { const d = parseDate(r['Data']||r['data']||''); return d && d >= prevStart && d <= prevEnd; });
+      lines.push('## 📈 Indicador de Qualidade');
+      lines.push('');
+      let qlText = 'Encerramos a semana com **' + qlPct + '%** dos atendimentos classificados como QL (Qualidade).';
+      if(attnPct > 0) qlText += ' Os ' + attnPct + '% restantes representam pontos de atenção identificados e acompanhados pela gestão.';
+      if(prevRows.length) {
+        const prevQL = prevRows.filter(r => (r[qlCol]||'').trim().toLowerCase() === 'ql').length;
+        const prevPct = Math.round(prevQL/prevRows.length*100);
+        if(prevPct !== qlPct) { const dir = qlPct > prevPct ? 'evoluímos' : 'recuamos'; qlText += ' Em relação à semana anterior, ' + dir + ' de **' + prevPct + '%** para **' + qlPct + '%** de qualidade.'; }
+        else { qlText += ' O índice de qualidade se manteve em **' + qlPct + '%** em relação à semana anterior.'; }
+      }
+      lines.push(qlText);
+      lines.push('');
+    }
+  }
 
   const text = lines.join('\n');
   const fb = document.getElementById('copy-feedback');
@@ -667,7 +828,7 @@ function fallbackCopy(text, fb) {
 }
 
 function setLog(type, msg, cls) {
-  const ids = { csv: 'csv-log', url: 'url-log' };
+  const ids = { csv: 'csv-log', url: 'url-log', ql: 'ql-log' };
   const el = document.getElementById(ids[type]);
   if(el) { el.textContent = msg; el.className = 'log' + (cls ? ' ' + cls : ''); }
 }
