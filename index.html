@@ -14,7 +14,6 @@
     --accent: #3D35C8; --accent-bg: #EEEDFC; --accent-text: #2A24A0;
     --success-bg: #E8F5EE; --success-text: #1A6B3C;
     --warn-bg: #FEF6E4; --warn-text: #8A5E00;
-    --danger-bg: #FDECEA; --danger-text: #9B2020;
     --purple-bar: #7F77DD;
     --mono: 'DM Mono', monospace; --sans: 'DM Sans', sans-serif;
     --radius: 10px; --radius-sm: 6px;
@@ -27,24 +26,20 @@
   .section { margin-bottom: 2.5rem; }
   .section-title { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); margin-bottom: 12px; font-family: var(--mono); }
   .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; }
-
   .tabs { display: flex; gap: 4px; margin-bottom: 14px; border-bottom: 1px solid var(--border); }
   .tab-btn { background: none; border: none; border-bottom: 2px solid transparent; border-radius: 0; padding: 6px 14px 10px; font-size: 13px; font-weight: 500; color: var(--text2); cursor: pointer; transition: color 0.15s; margin-bottom: -1px; }
   .tab-btn:hover { color: var(--text); }
   .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
   .tab-panel { display: none; }
   .tab-panel.active { display: block; }
-
   .input-group { display: flex; gap: 8px; }
   .input-group input { flex: 1; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 14px; font-family: var(--sans); background: var(--bg); color: var(--text); outline: none; transition: border-color 0.15s; }
   .input-group input:focus { border-color: var(--accent); }
   .input-group input::placeholder { color: var(--text3); }
-
   .drop-zone { border: 1.5px dashed var(--border); border-radius: var(--radius-sm); padding: 2rem 1rem; text-align: center; cursor: pointer; transition: background 0.15s, border-color 0.15s; color: var(--text2); font-size: 14px; }
   .drop-zone:hover, .drop-zone.drag { background: var(--surface2); border-color: var(--accent); }
   .drop-zone .dz-icon { font-size: 26px; margin-bottom: 8px; }
   .drop-zone .hint { font-size: 12px; color: var(--text3); margin-top: 4px; }
-
   .tme-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
   .tme-field { display: flex; flex-direction: column; gap: 5px; }
   .tme-field label { font-size: 11px; color: var(--text2); font-family: var(--mono); }
@@ -54,22 +49,17 @@
   .tme-field input::placeholder { color: var(--text3); font-size: 12px; }
   .tme-field.current input { border-color: var(--accent); background: var(--accent-bg); }
   .tme-field.current label { color: var(--accent-text); }
-
   button { border: none; border-radius: var(--radius-sm); padding: 10px 18px; font-size: 13px; font-weight: 500; font-family: var(--sans); cursor: pointer; transition: opacity 0.15s, transform 0.1s; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; }
   button:hover { opacity: 0.85; }
   button:active { transform: scale(0.98); }
   button:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
   .btn-load { background: var(--accent); color: #fff; }
   .btn-copy { background: #1a1a1a; color: #fff; width: 100%; justify-content: center; padding: 14px 18px; font-size: 14px; }
-
   .info-box { margin-top: 10px; background: var(--accent-bg); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 13px; color: var(--accent-text); line-height: 1.55; }
-
   .log { font-size: 12px; font-family: var(--mono); color: var(--text2); margin-top: 8px; min-height: 18px; }
-  .log.error { color: var(--danger-text); }
+  .log.error { color: #9B2020; }
   .log.ok { color: var(--success-text); }
-
   #preview { display: none; }
-
   .kpi-table { width: 100%; border-collapse: collapse; font-size: 14px; }
   .kpi-table th { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text3); font-family: var(--mono); padding: 6px 10px; text-align: left; border-bottom: 1px solid var(--border); }
   .kpi-table th:not(:first-child) { text-align: right; }
@@ -77,7 +67,6 @@
   .kpi-table td:not(:first-child) { text-align: right; font-family: var(--mono); font-size: 13px; }
   .kpi-table tr:last-child td { border-bottom: none; }
   .kpi-table .row-bold td { font-weight: 600; }
-
   .trend-table { width: 100%; border-collapse: collapse; font-size: 13px; }
   .trend-table th { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text3); font-family: var(--mono); padding: 6px 10px; text-align: left; border-bottom: 1px solid var(--border); }
   .trend-table th:not(:first-child) { text-align: right; }
@@ -85,15 +74,12 @@
   .trend-table td:not(:first-child) { text-align: right; }
   .trend-table tr:last-child td { border-bottom: none; }
   .trend-table .current td { background: var(--accent-bg); color: var(--accent-text); font-weight: 600; }
-
   .obs-list { margin-top: 12px; padding-left: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; }
   .obs-list li { font-size: 13px; color: var(--text2); padding-left: 16px; position: relative; line-height: 1.5; }
   .obs-list li::before { content: '•'; position: absolute; left: 4px; color: var(--accent); }
-
   .metric-esc { background: var(--accent-bg); border-radius: var(--radius-sm); padding: 14px; display: inline-block; min-width: 200px; }
   .metric-esc .lbl { font-size: 11px; color: var(--accent-text); font-family: var(--mono); margin-bottom: 4px; opacity: 0.85; }
   .metric-esc .val { font-size: 24px; font-weight: 600; letter-spacing: -0.5px; color: var(--accent); }
-
   .cat-list { display: flex; flex-direction: column; }
   .cat-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
   .cat-row:last-child { border-bottom: none; }
@@ -102,9 +88,17 @@
   .cat-bar { height: 100%; background: var(--purple-bar); border-radius: 3px; }
   .cat-num { font-family: var(--mono); font-size: 12px; color: var(--text2); min-width: 24px; text-align: right; }
   .cat-pct { font-family: var(--mono); font-size: 12px; color: var(--text3); min-width: 36px; text-align: right; }
-
-  .cat-group { margin-bottom: 16px; }
-  .cat-group-title { font-size: 13px; font-weight: 600; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+  /* toggles */
+  .toggle { border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 8px; overflow: hidden; }
+  .toggle-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; cursor: pointer; user-select: none; background: var(--surface2); transition: background 0.15s; }
+  .toggle-header:hover { background: var(--border); }
+  .toggle-title { font-size: 13px; font-weight: 600; color: var(--text); }
+  .toggle-count { font-size: 11px; font-family: var(--mono); color: var(--text3); margin-left: 8px; }
+  .toggle-arrow { font-size: 11px; color: var(--text3); transition: transform 0.2s; display: inline-block; }
+  .toggle-arrow.open { transform: rotate(90deg); }
+  .toggle-body { display: none; padding: 12px 14px; background: var(--surface); }
+  .toggle-body.open { display: block; }
+  /* chamados */
   .chamado { background: var(--surface2); border-radius: var(--radius-sm); padding: 10px 14px; margin-bottom: 8px; font-size: 13px; }
   .chamado:last-child { margin-bottom: 0; }
   .chamado .proto { font-family: var(--mono); font-size: 12px; font-weight: 500; margin-bottom: 3px; color: var(--text2); }
@@ -114,32 +108,16 @@
   .chamado a { font-size: 12px; color: var(--accent); text-decoration: none; font-weight: 500; }
   .chamado a:hover { text-decoration: underline; }
   .chamado .desc { font-size: 12px; color: var(--text2); font-style: italic; margin-top: 4px; line-height: 1.4; }
-
   .badge { display: inline-block; font-size: 11px; padding: 2px 7px; border-radius: 100px; font-family: var(--mono); margin-left: 6px; vertical-align: middle; }
   .badge-ok { background: var(--success-bg); color: var(--success-text); }
   .badge-wait { background: var(--warn-bg); color: var(--warn-text); }
   .badge-none { background: var(--surface2); color: var(--text2); border: 1px solid var(--border); }
-
-
   .copy-feedback { font-size: 12px; font-family: var(--mono); color: var(--success-text); margin-top: 8px; min-height: 18px; text-align: center; }
-
-  /* toggles */
-  .toggle { border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 8px; overflow: hidden; }
-  .toggle-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; cursor: pointer; user-select: none; background: var(--surface2); transition: background 0.15s; }
-  .toggle-header:hover { background: var(--border); }
-  .toggle-title { font-size: 13px; font-weight: 600; color: var(--text); }
-  .toggle-count { font-size: 11px; font-family: var(--mono); color: var(--text3); margin-left: 8px; }
-  .toggle-arrow { font-size: 11px; color: var(--text3); transition: transform 0.2s; }
-  .toggle-arrow.open { transform: rotate(90deg); }
-  .toggle-body { display: none; padding: 12px 14px; background: var(--surface); }
-  .toggle-body.open { display: block; }
-
   hr.divider { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
 </style>
 </head>
 <body>
 <div class="container">
-
   <header>
     <h1>Relatório SAC</h1>
     <span class="sub">Kiwipay · gerador semanal</span>
@@ -247,165 +225,187 @@ let currentData = null;
 let weeksData = [];
 
 function switchTab(tab) {
-  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',(i===0&&tab==='csv')||(i===1&&tab==='url')));
-  document.getElementById('tab-csv').classList.toggle('active',tab==='csv');
-  document.getElementById('tab-url').classList.toggle('active',tab==='url');
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', (i===0&&tab==='csv')||(i===1&&tab==='url')));
+  document.getElementById('tab-csv').classList.toggle('active', tab==='csv');
+  document.getElementById('tab-url').classList.toggle('active', tab==='url');
 }
 
-const dz=document.getElementById('drop-zone');
-const fi=document.getElementById('csv-input');
-dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('drag');});
-dz.addEventListener('dragleave',()=>dz.classList.remove('drag'));
-dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('drag');if(e.dataTransfer.files[0])handleFile(e.dataTransfer.files[0]);});
-fi.addEventListener('change',e=>{if(e.target.files[0])handleFile(e.target.files[0]);});
+const dz = document.getElementById('drop-zone');
+const fi = document.getElementById('csv-input');
+dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag'); });
+dz.addEventListener('dragleave', () => dz.classList.remove('drag'));
+dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('drag'); if(e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); });
+fi.addEventListener('change', e => { if(e.target.files[0]) handleFile(e.target.files[0]); });
 
-function handleFile(file){
-  if(!file.name.endsWith('.csv')){setLog('csv','Selecione um arquivo .csv','error');return;}
-  const reader=new FileReader();
-  reader.onload=e=>{
-    try{
-      parsedData=parseCSV(e.target.result);
-      if(!parsedData.length)throw new Error('Nenhum dado encontrado.');
-      dz.innerHTML=`<div class="dz-icon">✅</div>${file.name} — ${parsedData.length} registros carregados<div class="hint">Clique para trocar o arquivo</div>`;
-      setLog('csv','','ok');
+function handleFile(file) {
+  if(!file.name.endsWith('.csv')) { setLog('csv', 'Selecione um arquivo .csv', 'error'); return; }
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      parsedData = parseCSV(e.target.result);
+      if(!parsedData.length) throw new Error('Nenhum dado encontrado.');
+      dz.innerHTML = '<div class="dz-icon">✅</div>' + file.name + ' — ' + parsedData.length + ' registros carregados<div class="hint">Clique para trocar o arquivo</div>';
+      setLog('csv', '', 'ok');
       initWeeks(parsedData);
-    }catch(err){setLog('csv','Erro: '+err.message,'error');}
+    } catch(err) { setLog('csv', 'Erro: ' + err.message, 'error'); }
   };
-  reader.readAsText(file,'UTF-8');
+  reader.readAsText(file, 'UTF-8');
 }
 
-function extractSheetId(url){const m=url.match(/\/spreadsheets\/d\/([a-zA-Z0-9_-]+)/);return m?m[1]:null;}
-function extractGid(url){const m=url.match(/[#&?]gid=(\d+)/);return m?m[1]:'0';}
+function extractSheetId(url) { const m = url.match(/\/spreadsheets\/d\/([a-zA-Z0-9_-]+)/); return m ? m[1] : null; }
+function extractGid(url) { const m = url.match(/[#&?]gid=(\d+)/); return m ? m[1] : '0'; }
 
-async function loadSheet(){
-  const url=document.getElementById('sheets-url').value.trim();
-  if(!url){setLog('url','Cole o link da planilha primeiro.');return;}
-  const sheetId=extractSheetId(url);
-  if(!sheetId){setLog('url','Link inválido.','error');return;}
-  const csvUrl=`https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${extractGid(url)}`;
-  const btn=document.getElementById('load-btn');
-  btn.disabled=true;btn.textContent='Carregando...';
-  setLog('url','Buscando dados...');
-  try{
-    const res=await fetch(csvUrl);
-    if(!res.ok)throw new Error('Sem acesso. Verifique se a planilha está pública via link.');
-    const text=await res.text();
-    parsedData=parseCSV(text);
-    if(!parsedData.length)throw new Error('Nenhum dado encontrado.');
-    btn.textContent='Recarregar';btn.disabled=false;
-    setLog('url',`✓ ${parsedData.length} registros carregados.`,'ok');
+async function loadSheet() {
+  const url = document.getElementById('sheets-url').value.trim();
+  if(!url) { setLog('url', 'Cole o link da planilha primeiro.'); return; }
+  const sheetId = extractSheetId(url);
+  if(!sheetId) { setLog('url', 'Link inválido.', 'error'); return; }
+  const csvUrl = 'https://docs.google.com/spreadsheets/d/' + sheetId + '/export?format=csv&gid=' + extractGid(url);
+  const btn = document.getElementById('load-btn');
+  btn.disabled = true; btn.textContent = 'Carregando...';
+  setLog('url', 'Buscando dados...');
+  try {
+    const res = await fetch(csvUrl);
+    if(!res.ok) throw new Error('Sem acesso. Verifique se a planilha está pública via link.');
+    const text = await res.text();
+    parsedData = parseCSV(text);
+    if(!parsedData.length) throw new Error('Nenhum dado encontrado.');
+    btn.textContent = 'Recarregar'; btn.disabled = false;
+    setLog('url', '✓ ' + parsedData.length + ' registros carregados.', 'ok');
     initWeeks(parsedData);
-  }catch(e){btn.textContent='Carregar';btn.disabled=false;setLog('url','Erro: '+e.message,'error');}
+  } catch(e) { btn.textContent = 'Carregar'; btn.disabled = false; setLog('url', 'Erro: ' + e.message, 'error'); }
 }
 
-function parseCSV(text){
-  const lines=text.split('\n').filter(l=>l.trim());
-  const headers=splitLine(lines[0]);
-  return lines.slice(1).map(line=>{
-    const vals=splitLine(line),obj={};
-    headers.forEach((h,i)=>{obj[h.trim()]=(vals[i]||'').trim();});
+function parseCSV(text) {
+  const lines = text.split('\n').filter(l => l.trim());
+  const headers = splitLine(lines[0]);
+  return lines.slice(1).map(line => {
+    const vals = splitLine(line), obj = {};
+    headers.forEach((h, i) => { obj[h.trim()] = (vals[i] || '').trim(); });
     return obj;
-  }).filter(r=>r[C.proto]);
+  }).filter(r => r[C.proto]);
 }
-function splitLine(line){
-  const r=[];let cur='',inQ=false;
-  for(let i=0;i<line.length;i++){
-    const c=line[i];
-    if(c==='"'){inQ=!inQ;}else if(c===','&&!inQ){r.push(cur);cur='';}else{cur+=c;}
+
+function splitLine(line) {
+  const r = []; let cur = '', inQ = false;
+  for(let i = 0; i < line.length; i++) {
+    const c = line[i];
+    if(c === '"') { inQ = !inQ; }
+    else if(c === ',' && !inQ) { r.push(cur); cur = ''; }
+    else { cur += c; }
   }
-  r.push(cur);return r;
+  r.push(cur); return r;
 }
-function parseDate(str){
-  if(!str)return null;
-  const p=str.split('/');
-  if(p.length>=3)return new Date(parseInt(p[2]),parseInt(p[1])-1,parseInt(p[0]));
+
+function parseDate(str) {
+  if(!str) return null;
+  const p = str.trim().split('/');
+  if(p.length >= 3) return new Date(parseInt(p[2]), parseInt(p[1])-1, parseInt(p[0]));
   return new Date(str);
 }
-function fmt(d){return d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'});}
-function fmtShort(d){return d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'});}
-function isEsc(r){const v=(r[C.linkEsc]||'').trim();return v&&v!=='—'&&v!=='-'&&v!=='';}
 
-/* canal normalizado: vazio ou sem canal → E-mail */
-function getCanal(r){
-  const v=(r[C.canal]||'').trim();
-  if(!v||v==='(sem canal)'||v==='-'||v==='—')return'E-mail';
-  return v;
+function fmt(d) { return d.toLocaleDateString('pt-BR', {day:'2-digit', month:'2-digit', year:'numeric'}); }
+function fmtShort(d) { return d.toLocaleDateString('pt-BR', {day:'2-digit', month:'2-digit'}); }
+function isEsc(r) { const v = (r[C.linkEsc] || '').trim(); return v && v !== '—' && v !== '-' && v !== ''; }
+function isConc(r) { return (r[C.status] || '').toLowerCase().includes('conclu'); }
+function getCanal(r) { const v = (r[C.canal] || '').trim(); return (v && v !== '—' && v !== '-') ? v : 'E-mail'; }
+
+function parseTme(s) {
+  try { return parseFloat((s || '').trim().replace(',', '.')); } catch(e) { return NaN; }
 }
 
-function fmtTime(mins){
-  if(mins===null||isNaN(mins))return'N/D';
-  if(mins<60)return mins+'min';
-  const h=Math.floor(mins/60),m=Math.round(mins%60);
-  if(mins<1440){return m>0?`${h}h ${m}min`:`${h}h`;}
-  const d=Math.floor(mins/1440),rh=Math.floor((mins%1440)/60);
-  return rh>0?`${d}d ${rh}h`:`${d}d`;
+function fmtTime(mins) {
+  if(mins === null || isNaN(mins)) return 'N/D';
+  if(mins < 60) return Math.round(mins) + 'min';
+  const h = Math.floor(mins / 60), m = Math.round(mins % 60);
+  if(mins < 1440) return m > 0 ? h + 'h ' + m + 'min' : h + 'h';
+  const d = Math.floor(mins / 1440), rh = Math.floor((mins % 1440) / 60);
+  return rh > 0 ? d + 'd ' + rh + 'h' : d + 'd';
 }
 
-function getWeekBounds(anchorDate){
-  const end=new Date(anchorDate);end.setHours(23,59,59,999);
-  const start=new Date(end);start.setDate(end.getDate()-6);start.setHours(0,0,0,0);
-  return{start,end};
+function normalizeTme(str) {
+  if(!str) return '';
+  const s = str.trim();
+  return !isNaN(s) ? s + 'min' : s;
 }
 
-function processWeek(rows,start,end){
-  const f=rows.filter(r=>{const d=parseDate(r[C.date]);return d&&d>=start&&d<=end;});
-  const total=f.length;
-  const conc=f.filter(r=>(r[C.status]||'').toLowerCase().includes('conclu')).length;
-  const esc=f.filter(r=>isEsc(r)).length;
-  const sem=f.filter(r=>(r[C.status]||'').toLowerCase().includes('sem retorno')).length;
-  const ag=f.filter(r=>(r[C.status]||'').toLowerCase().includes('aguardando')).length;
-  const escT=f.filter(r=>isEsc(r)&&(r[C.status]||'').toLowerCase().includes('conclu')).map(r=>parseFloat((r[C.tme]||'').replace(',','.'))).filter(v=>!isNaN(v)&&v>0);
-  const tmeEsc=escT.length?Math.round(escT.reduce((a,b)=>a+b,0)/escT.length):null;
-  const cc={};
-  f.forEach(r=>{const c=(r[C.categoria]||'(sem categoria)').trim()||'(sem categoria)';cc[c]=(cc[c]||0)+1;});
-  const cats=Object.entries(cc).sort((a,b)=>b[1]-a[1]);
-  const top10=cats.slice(0,10);
-  const cases={};
-  top10.forEach(([cat])=>{cases[cat]=f.filter(r=>((r[C.categoria]||'(sem categoria)').trim()||'(sem categoria)')===cat).slice(0,2);});
-  const canalCount={};
-  f.forEach(r=>{const ch=getCanal(r);canalCount[ch]=(canalCount[ch]||0)+1;});
-  // count IA do Crisp: atendente contém "ia" (case-insensitive) mas não é humano — match exato "IA do Crisp" ou similar
-  const iaCrisp=f.filter(r=>{const a=(r[C.atendente]||'').toLowerCase();return a.includes('ia do crisp')||a==='ia';}).length;
-  return{rows:f,total,conc,esc,sem,ag,tmeEsc,cats,top10,cases,canalCount,iaCrisp,start,end};
+function parseTmeToMin(str) {
+  if(!str) return null;
+  const s = str.toLowerCase().replace(/\s/g, '');
+  let total = 0;
+  const h = s.match(/(\d+)h/), m = s.match(/(\d+)min/);
+  if(h) total += parseInt(h[1]) * 60;
+  if(m) total += parseInt(m[1]);
+  if(!h && !m) { const n = parseInt(s); if(!isNaN(n)) total = n; }
+  return total > 0 ? total : null;
 }
 
-function initWeeks(rows){
-  const today=new Date();
-  weeksData=[];
-  for(let i=0;i<4;i++){
-    const anchor=new Date(today);
-    anchor.setDate(today.getDate()-i*7);
-    const{start,end}=getWeekBounds(anchor);
-    weeksData.push(processWeek(rows,start,end));
+function tmeDirection(prev, curr) {
+  const p = parseTmeToMin(prev), c = parseTmeToMin(curr);
+  if(p !== null && c !== null) return c < p ? 'diminuiu' : 'aumentou';
+  return 'mudou';
+}
+
+function getWeekBounds(anchorDate) {
+  const end = new Date(anchorDate); end.setHours(23,59,59,999);
+  const start = new Date(end); start.setDate(end.getDate()-6); start.setHours(0,0,0,0);
+  return { start, end };
+}
+
+function processWeek(rows, start, end) {
+  const f = rows.filter(r => { const d = parseDate(r[C.date]); return d && d >= start && d <= end; });
+  const total = f.length;
+  const conc = f.filter(r => isConc(r)).length;
+  const esc = f.filter(r => isEsc(r)).length;
+  const sem = f.filter(r => (r[C.status] || '').toLowerCase().includes('sem retorno')).length;
+  const ag = f.filter(r => (r[C.status] || '').toLowerCase().includes('aguardando')).length;
+  const escT = f.filter(r => isEsc(r) && isConc(r)).map(r => parseTme(r[C.tme])).filter(v => !isNaN(v) && v > 0);
+  const tmeEsc = escT.length ? Math.round(escT.reduce((a,b) => a+b, 0) / escT.length) : null;
+  const cc = {};
+  f.forEach(r => { const c = (r[C.categoria] || '(sem categoria)').trim() || '(sem categoria)'; cc[c] = (cc[c] || 0) + 1; });
+  const cats = Object.entries(cc).sort((a,b) => b[1]-a[1]);
+  const top10 = cats.slice(0, 10);
+  const cases = {};
+  top10.forEach(([cat]) => { cases[cat] = f.filter(r => ((r[C.categoria]||'(sem categoria)').trim()||'(sem categoria)') === cat).slice(0, 2); });
+  const canalCount = {};
+  f.forEach(r => { const ch = getCanal(r); canalCount[ch] = (canalCount[ch] || 0) + 1; });
+  const iaCrisp = f.filter(r => { const a = (r[C.atendente] || '').toLowerCase(); return a === 'ia do crisp' || a === 'ia'; }).length;
+  return { rows:f, total, conc, esc, sem, ag, tmeEsc, cats, top10, cases, canalCount, iaCrisp, start, end };
+}
+
+function initWeeks(rows) {
+  const today = new Date();
+  weeksData = [];
+  for(let i = 0; i < 4; i++) {
+    const anchor = new Date(today); anchor.setDate(today.getDate() - i*7);
+    const { start, end } = getWeekBounds(anchor);
+    weeksData.push(processWeek(rows, start, end));
   }
-  currentData=weeksData[0];
+  currentData = weeksData[0];
 
-  const grid=document.getElementById('tme-grid');
-  grid.innerHTML='';
-  [...weeksData].reverse().forEach((w,i)=>{
-    const isCurrent=(i===3);
-    const div=document.createElement('div');
-    div.className='tme-field'+(isCurrent?' current':'');
-    div.innerHTML=`<label>${fmtShort(w.start)} a ${fmtShort(w.end)}<span>${isCurrent?'semana atual':''}</span></label>
-      <input type="text" id="tme-manual-${i}" placeholder="min" />`;
+  const grid = document.getElementById('tme-grid');
+  grid.innerHTML = '';
+  [...weeksData].reverse().forEach((w, i) => {
+    const isCurrent = (i === 3);
+    const div = document.createElement('div');
+    div.className = 'tme-field' + (isCurrent ? ' current' : '');
+    div.innerHTML = '<label>' + fmtShort(w.start) + ' a ' + fmtShort(w.end) + '<span>' + (isCurrent ? 'semana atual' : '') + '</span></label>' +
+      '<input type="text" id="tme-manual-' + i + '" placeholder="min" />';
     grid.appendChild(div);
   });
 
   renderAll();
-  document.getElementById('preview').style.display='block';
-  document.querySelectorAll('[id^="tme-manual-"]').forEach(inp=>{
-    inp.addEventListener('input',()=>renderTrend(weeksData));
+  document.getElementById('preview').style.display = 'block';
+  document.querySelectorAll('[id^="tme-manual-"]').forEach(inp => {
+    inp.addEventListener('input', () => renderTrend(weeksData));
   });
 }
 
-function getManualTMEs(){
-  return[0,1,2,3].map(i=>{
-    const el=document.getElementById('tme-manual-'+i);
-    return el?el.value.trim():'';
-  });
+function getManualTMEs() {
+  return [0,1,2,3].map(i => { const el = document.getElementById('tme-manual-' + i); return el ? el.value.trim() : ''; });
 }
 
-function renderAll(){
+function renderAll() {
   renderTrend(weeksData);
   renderKPI(weeksData[0]);
   renderTMEesc(weeksData[0]);
@@ -413,223 +413,159 @@ function renderAll(){
   renderCases(weeksData[0]);
 }
 
-/* ── trend (no vs-anterior column) ── */
-function renderTrend(weeks){
-  const tmes=getManualTMEs();
-  const reversed=[...weeks].reverse();
-
-  let html=`<thead><tr>
-    <th>Período</th><th>Chamados</th><th>Tempo de espera</th>
-  </tr></thead><tbody>`;
-  reversed.forEach((w,i)=>{
-    const isCurrent=(i===3);
-    const rawTme=tmes[i]||'';
-    const tmeVal=rawTme?((!isNaN(rawTme.trim())?rawTme.trim()+'min':rawTme)):'Sem coleta';
-    html+=`<tr class="${isCurrent?'current':''}">
-      <td>${fmtShort(w.start)} a ${fmtShort(w.end)}${isCurrent?' ★':''}</td>
-      <td>${w.total}</td>
-      <td>${tmeVal}</td>
-    </tr>`;
+function renderTrend(weeks) {
+  const tmes = getManualTMEs();
+  const reversed = [...weeks].reverse();
+  let html = '<thead><tr><th>Período</th><th>Chamados</th><th>Tempo de espera</th></tr></thead><tbody>';
+  reversed.forEach((w, i) => {
+    const isCurrent = (i === 3);
+    const raw = tmes[i] || '';
+    const tmeVal = raw ? (!isNaN(raw) ? raw + 'min' : raw) : 'Sem coleta';
+    html += '<tr class="' + (isCurrent ? 'current' : '') + '">' +
+      '<td>' + fmtShort(w.start) + ' a ' + fmtShort(w.end) + (isCurrent ? ' ★' : '') + '</td>' +
+      '<td>' + w.total + '</td>' +
+      '<td>' + tmeVal + '</td>' +
+      '</tr>';
   });
-  html+='</tbody>';
-  document.getElementById('trend-table').innerHTML=html;
+  html += '</tbody>';
+  document.getElementById('trend-table').innerHTML = html;
 
-  const curr=weeks[0],prev=weeks[1];
-  const obs=[];
-
-  if(prev.total>0&&curr.total>0){
-    const diff=curr.total-prev.total;
-    const pct=Math.round(Math.abs(diff)/prev.total*100);
-    obs.push(`Volume ${diff>=0?'aumentou':'diminuiu'} ${diff>=0?'+':''}${diff} chamados (${pct}%) em relação à semana anterior (de ${prev.total} para ${curr.total}).`);
+  const curr = weeks[0], prev = weeks[1];
+  const obs = [];
+  if(prev.total > 0 && curr.total > 0) {
+    const diff = curr.total - prev.total;
+    const pct = Math.round(Math.abs(diff) / prev.total * 100);
+    obs.push('Volume ' + (diff >= 0 ? 'aumentou' : 'diminuiu') + ' ' + (diff >= 0 ? '+' : '') + diff + ' chamados (' + pct + '%) em relação à semana anterior (de ' + prev.total + ' para ' + curr.total + ').');
   }
-
-  const currTme=tmes[3],prevTme=tmes[2];
-  if(currTme&&prevTme&&currTme!=='Sem coleta'&&prevTme!=='Sem coleta'){
-    if(currTme.trim()===prevTme.trim()){
-      obs.push(`O tempo médio de espera se manteve em ${currTme}.`);
+  const ct = tmes[3], pt = tmes[2];
+  if(ct && pt && ct !== 'Sem coleta' && pt !== 'Sem coleta') {
+    const ctN = normalizeTme(ct), ptN = normalizeTme(pt);
+    if(parseTmeToMin(ct) === parseTmeToMin(pt)) {
+      obs.push('O tempo médio de espera se manteve em ' + ctN + '.');
     } else {
-      obs.push(`O tempo médio de espera ${tmeDirection(prevTme,currTme)} de ${prevTme} para ${currTme}.`);
+      obs.push('O tempo médio de espera ' + tmeDirection(pt, ct) + ' de ' + ptN + ' para ' + ctN + '.');
     }
-  } else if(currTme&&currTme!=='Sem coleta'&&(!prevTme||prevTme==='Sem coleta')){
-    obs.push(`Tempo médio de espera na semana atual: ${currTme}.`);
+  } else if(ct && ct !== 'Sem coleta' && (!pt || pt === 'Sem coleta')) {
+    obs.push('Tempo médio de espera na semana atual: ' + normalizeTme(ct) + '.');
   }
-
-  if(curr.total>0){
-    const avg=+(curr.total/NUM_OPERATORS/7).toFixed(1);
-    obs.push(`Média de atendimentos por operador/dia: ${avg} (${NUM_OPERATORS} operadores, 7 dias).`);
+  if(curr.total > 0) {
+    const avg = Math.round(curr.total / NUM_OPERATORS / 7 * 10) / 10;
+    obs.push('Média de atendimentos por operador/dia: ' + avg + ' (' + NUM_OPERATORS + ' operadores, 7 dias).');
   }
-
-  document.getElementById('obs-list').innerHTML=obs.map(o=>`<li>${o}</li>`).join('');
+  document.getElementById('obs-list').innerHTML = obs.map(o => '<li>' + o + '</li>').join('');
 }
 
-/* try to detect if tme went up or down by parsing min values */
-function normalizeTme(str){
-  if(!str)return'';
-  const s=str.trim();
-  return !isNaN(s)?s+'min':s;
-}
-function parseTmeToMin(str){
-  if(!str)return null;
-  const s=str.toLowerCase().replace(/\s/g,'');
-  let total=0;
-  const h=s.match(/(\d+)h/);const m=s.match(/(\d+)min/);
-  if(h)total+=parseInt(h[1])*60;
-  if(m)total+=parseInt(m[1]);
-  if(!h&&!m){const n=parseInt(s);if(!isNaN(n))total=n;}
-  return total>0?total:null;
-}
-function tmeDirection(prev,curr){
-  const p=parseTmeToMin(prev),c=parseTmeToMin(curr);
-  if(p!==null&&c!==null){return c<p?'diminuiu':'aumentou';}
-  return'mudou';
-}
-
-/* ── KPI table ── */
-function renderKPI(w){
-  const pct=(n,t)=>t?+(n/t*100).toFixed(1):0;
-  const topCat=w.cats[0]||['—',0];
-  const kpiRows=[
-    {label:'<strong>Total de chamados</strong>',qty:w.total,p:'—',bold:true},
-    {label:'✅ Concluídos',qty:w.conc,p:pct(w.conc,w.total).toFixed(1)+'%'},
-    {label:'🔴 Escalonados',qty:w.esc,p:pct(w.esc,w.total).toFixed(1)+'%'},
-    {label:'⬜ Sem retorno do cliente',qty:w.sem,p:pct(w.sem,w.total).toFixed(1)+'%'},
-    {label:'🟡 Aguardando retorno do cliente',qty:w.ag,p:pct(w.ag,w.total).toFixed(1)+'%'},
-    {label:'<strong>Top categoria</strong>',qty:`${topCat[0]} — ${topCat[1]}`,p:pct(topCat[1],w.total).toFixed(1)+'%',bold:true},
+function renderKPI(w) {
+  const pct = (n, t) => t ? +(n/t*100).toFixed(1) : 0;
+  const topCat = w.cats[0] || ['—', 0];
+  const kpiRows = [
+    { label: '<strong>Total de chamados</strong>', qty: w.total, p: '—', bold: true },
+    { label: '✅ Concluídos', qty: w.conc, p: pct(w.conc, w.total).toFixed(1) + '%' },
+    { label: '🔴 Escalonados', qty: w.esc, p: pct(w.esc, w.total).toFixed(1) + '%' },
+    { label: '⬜ Sem retorno do cliente', qty: w.sem, p: pct(w.sem, w.total).toFixed(1) + '%' },
+    { label: '🟡 Aguardando retorno do cliente', qty: w.ag, p: pct(w.ag, w.total).toFixed(1) + '%' },
+    { label: '<strong>Top categoria</strong>', qty: topCat[0] + ' — ' + topCat[1], p: pct(topCat[1], w.total).toFixed(1) + '%', bold: true },
   ];
-  let html=`<thead><tr><th>Indicador</th><th>Qtd</th><th>%</th></tr></thead><tbody>`;
-  kpiRows.forEach(r=>{html+=`<tr class="${r.bold?'row-bold':''}"><td>${r.label}</td><td>${r.qty}</td><td>${r.p}</td></tr>`;});
-  html+='</tbody>';
-  document.getElementById('kpi-table').innerHTML=html;
+  let html = '<thead><tr><th>Indicador</th><th>Qtd</th><th>%</th></tr></thead><tbody>';
+  kpiRows.forEach(r => { html += '<tr class="' + (r.bold ? 'row-bold' : '') + '"><td>' + r.label + '</td><td>' + r.qty + '</td><td>' + r.p + '</td></tr>'; });
+  html += '</tbody>';
+  document.getElementById('kpi-table').innerHTML = html;
 
-  const canais=Object.entries(w.canalCount).sort((a,b)=>b[1]-a[1]);
-  let chtml=`<thead><tr><th>Canal</th><th>Qtd</th><th>%</th></tr></thead><tbody>`;
-  canais.forEach(([canal,cnt])=>{chtml+=`<tr><td>${canal}</td><td>${cnt}</td><td>${pct(cnt,w.total).toFixed(1)}%</td></tr>`;});
-  chtml+='</tbody>';
-  document.getElementById('canal-table').innerHTML=chtml;
+  const canais = Object.entries(w.canalCount).sort((a,b) => b[1]-a[1]);
+  let chtml = '<thead><tr><th>Canal</th><th>Qtd</th><th>%</th></tr></thead><tbody>';
+  canais.forEach(([canal, cnt]) => { chtml += '<tr><td>' + canal + '</td><td>' + cnt + '</td><td>' + pct(cnt, w.total).toFixed(1) + '%</td></tr>'; });
+  chtml += '</tbody>';
+  document.getElementById('canal-table').innerHTML = chtml;
 }
 
-function renderTMEesc(w){
-  document.getElementById('m-tme-esc').textContent=w.tmeEsc!==null?fmtTime(w.tmeEsc):w.esc===0?'Sem escalonados':'N/D';
+function renderTMEesc(w) {
+  document.getElementById('m-tme-esc').textContent = w.tmeEsc !== null ? fmtTime(w.tmeEsc) : (w.esc === 0 ? 'Sem escalonados' : 'N/D');
 }
 
-function renderCats(w){
-  document.getElementById('cats-list').innerHTML=w.cats.map(([cat,cnt])=>{
-    const p=w.total?Math.round(cnt/w.total*100):0;
-    return`<div class="cat-row"><span class="cat-name" title="${cat}">${cat}</span><div class="cat-bar-wrap"><div class="cat-bar" style="width:${p}%"></div></div><span class="cat-num">${cnt}</span><span class="cat-pct">${p}%</span></div>`;
+function renderCats(w) {
+  document.getElementById('cats-list').innerHTML = w.cats.map(([cat, cnt]) => {
+    const p = w.total ? Math.round(cnt / w.total * 100) : 0;
+    return '<div class="cat-row"><span class="cat-name" title="' + cat + '">' + cat + '</span><div class="cat-bar-wrap"><div class="cat-bar" style="width:' + p + '%"></div></div><span class="cat-num">' + cnt + '</span><span class="cat-pct">' + p + '%</span></div>';
   }).join('');
 }
 
-function badge(s){
-  const sl=(s||'').toLowerCase();
-  if(sl.includes('conclu'))return'<span class="badge badge-ok">✅ concluído</span>';
-  if(sl.includes('aguardando'))return'<span class="badge badge-wait">🟡 aguardando</span>';
-  if(sl.includes('sem retorno'))return'<span class="badge badge-none">⬜ sem retorno</span>';
-  return`<span class="badge badge-none">${s}</span>`;
+function badge(s) {
+  const sl = (s || '').toLowerCase();
+  if(sl.includes('conclu')) return '<span class="badge badge-ok">✅ concluído</span>';
+  if(sl.includes('aguardando')) return '<span class="badge badge-wait">🟡 aguardando</span>';
+  if(sl.includes('sem retorno')) return '<span class="badge badge-none">⬜ sem retorno</span>';
+  return '<span class="badge badge-none">' + s + '</span>';
 }
 
-function renderCases(w){
-  document.getElementById('casos-section').innerHTML=w.top10.map(([cat],idx)=>{
-    const cnt=w.cases[cat].length;
-    const items=w.cases[cat].map(r=>{
-      const cL=(r[C.linkCrisp]||'').trim(),eL=(r[C.linkEsc]||'').trim();
-      return`<div class="chamado">
-        <div class="proto">${r[C.proto]} ${badge(r[C.status])}</div>
-        <div class="nome">${r[C.nome]||'—'}</div>
-        <div class="atend">${r[C.atendente]||'—'}</div>
-        <div class="links">${cL&&cL!=='—'?`<a href="${cL}" target="_blank">↗ Crisp</a>`:''}${eL&&eL!=='—'&&eL?`<a href="${eL}" target="_blank">↗ Escalonamento</a>`:''}</div>
-        ${r[C.descricao]?`<div class="desc">${r[C.descricao]}</div>`:''}
-      </div>`;
+function renderCases(w) {
+  document.getElementById('casos-section').innerHTML = w.top10.map(([cat], idx) => {
+    const cnt = w.cases[cat].length;
+    const items = w.cases[cat].map(r => {
+      const cL = (r[C.linkCrisp] || '').trim(), eL = (r[C.linkEsc] || '').trim();
+      return '<div class="chamado">' +
+        '<div class="proto">' + r[C.proto] + badge(r[C.status]) + '</div>' +
+        '<div class="nome">' + (r[C.nome] || '—') + '</div>' +
+        '<div class="atend">' + (r[C.atendente] || '—') + '</div>' +
+        '<div class="links">' +
+          (cL && cL !== '—' ? '<a href="' + cL + '" target="_blank">↗ Crisp</a>' : '') +
+          (eL && eL !== '—' && eL ? '<a href="' + eL + '" target="_blank">↗ Escalonamento</a>' : '') +
+        '</div>' +
+        (r[C.descricao] ? '<div class="desc">' + r[C.descricao] + '</div>' : '') +
+        '</div>';
     }).join('');
-    return`<div class="toggle" id="toggle-${idx}">
-      <div class="toggle-header" onclick="toggleCase(${idx})">
-        <span><span class="toggle-title">${cat}</span><span class="toggle-count">${cnt} exemplo${cnt!==1?'s':''}</span></span>
-        <span class="toggle-arrow" id="arrow-${idx}">▶</span>
-      </div>
-      <div class="toggle-body" id="tbody-${idx}">${items}</div>
-    </div>`;
+    return '<div class="toggle" id="toggle-' + idx + '">' +
+      '<div class="toggle-header" onclick="toggleCase(' + idx + ')">' +
+        '<span><span class="toggle-title">' + cat + '</span><span class="toggle-count">' + cnt + ' exemplo' + (cnt !== 1 ? 's' : '') + '</span></span>' +
+        '<span class="toggle-arrow" id="arrow-' + idx + '">▶</span>' +
+      '</div>' +
+      '<div class="toggle-body" id="tbody-' + idx + '">' + items + '</div>' +
+    '</div>';
   }).join('');
 }
 
-function toggleCase(idx){
-  const body=document.getElementById('tbody-'+idx);
-  const arrow=document.getElementById('arrow-'+idx);
-  const open=body.classList.toggle('open');
-  arrow.classList.toggle('open',open);
+function toggleCase(idx) {
+  const body = document.getElementById('tbody-' + idx);
+  const arrow = document.getElementById('arrow-' + idx);
+  const open = body.classList.toggle('open');
+  arrow.classList.toggle('open', open);
 }
 
-- Concluídos: ${w.conc} (${pct(w.conc,w.total)}%)
-- Escalonados: ${w.esc} (${pct(w.esc,w.total)}%)
-- Sem retorno: ${w.sem} | Aguardando: ${w.ag}
-- Tempo de espera (externo): ${tmes[3]||'Sem coleta'}
-- TME de resolução dos casos escalonados: ${fmtTime(w.tmeEsc)}
-- Top categorias: ${topCats}
-- Casos escalonados:\n${escCases||'Nenhum'}
-- Atendimentos realizados pela IA do Crisp (atendente = "IA do Crisp" ou "IA"): ${w.iaCrisp}
-- Média de atendimentos por operador/dia: ${avg} (${NUM_OPERATORS} operadores fixos, 7 dias)
+function copyReport() {
+  if(!currentData) { document.getElementById('copy-feedback').textContent = 'Carregue os dados primeiro.'; return; }
+  const w = currentData;
+  const tmes = getManualTMEs();
+  const pct = (n, t) => t ? +(n/t*100).toFixed(1) : 0;
+  const reversed = [...weeksData].reverse();
+  const lines = [];
 
-Regras importantes:
-1. Use EXATAMENTE os números acima — não invente nem estime valores diferentes.
-2. Para "IA do Crisp", use o número ${w.iaCrisp} como total de atendimentos da IA esta semana.
-3. Seja direto, analítico e específico. Escreva em português do Brasil.
-
-[
-  {"label": "Principais assuntos da semana", "text": "..."},
-  {"label": "Casos Escalonados", "text": "..."},
-  {"label": "IA do Crisp", "text": "..."}
-]`;
-
-  try{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})
-    });
-    const data=await res.json();
-    const raw=(data.content||[]).map(b=>b.text||'').join('');
-    const parsed=JSON.parse(raw.replace(/```json|```/g,'').trim());
-      </div>`).join('');
-  }catch(e){
-    btn.textContent='↺ Tentar novamente';btn.disabled=false;
-  }
-}
-
-/* ── copy report as markdown ── */
-function copyReport(){
-  if(!currentData){document.getElementById('copy-feedback').textContent='Carregue os dados primeiro.';return;}
-  const w=currentData;
-  const tmes=getManualTMEs();
-  const pct=(n,t)=>t?+(n/t*100).toFixed(1):0;
-  const reversed=[...weeksData].reverse();
-  const lines=[];
-
-  lines.push(`# Relatório SAC Kiwipay — ${fmt(w.start)} a ${fmt(w.end)}`);
+  lines.push('# Relatório SAC Kiwipay — ' + fmt(w.start) + ' a ' + fmt(w.end));
   lines.push('');
-
   lines.push('## 📊 Indicadores das últimas 4 semanas');
   lines.push('');
   lines.push('| Semana | Chamados | Tempo de espera |');
   lines.push('| --- | --- | --- |');
-  reversed.forEach((wk,i)=>{
-    const tme=tmes[i]||'Sem coleta';
-    const isCurrent=(i===3);
-    lines.push(`| ${fmt(wk.start)} a ${fmt(wk.end)}${isCurrent?' (Atual)':''} | ${wk.total} | ${tme} |`);
+  reversed.forEach((wk, i) => {
+    const raw = tmes[i] || '';
+    const tmeVal = raw ? (!isNaN(raw) ? raw + 'min' : raw) : 'Sem coleta';
+    const isCurrent = (i === 3);
+    lines.push('| ' + fmt(wk.start) + ' a ' + fmt(wk.end) + (isCurrent ? ' (Atual)' : '') + ' | ' + wk.total + ' | ' + tmeVal + ' |');
   });
   lines.push('');
-
-  // obs
-  const curr=w,prev=weeksData[1];
-  if(prev&&prev.total>0&&curr.total>0){
-    const diff=curr.total-prev.total;
-    const p=Math.round(Math.abs(diff)/prev.total*100);
-    lines.push(`- Volume ${diff>=0?'aumentou':'diminuiu'} ${diff>=0?'+':''}${diff} chamados (${p}%) em relação à semana anterior (de ${prev.total} para ${curr.total}).`);
+  const curr = w, prev = weeksData[1];
+  if(prev && prev.total > 0 && curr.total > 0) {
+    const diff = curr.total - prev.total;
+    const p = Math.round(Math.abs(diff) / prev.total * 100);
+    lines.push('- Volume ' + (diff >= 0 ? 'aumentou' : 'diminuiu') + ' ' + (diff >= 0 ? '+' : '') + diff + ' chamados (' + p + '%) em relação à semana anterior (de ' + prev.total + ' para ' + curr.total + ').');
   }
-  const ct=tmes[3],pt=tmes[2];
-  if(ct&&pt&&ct!=='Sem coleta'&&pt!=='Sem coleta'){
-    if(ct.trim()===pt.trim()){lines.push(`- O tempo médio de espera se manteve em ${ct}.`);}
-    else{lines.push(`- O tempo médio de espera ${tmeDirection(pt,ct)} de ${pt} para ${ct}.`);}
+  const ct = tmes[3], pt = tmes[2];
+  if(ct && pt && ct !== 'Sem coleta' && pt !== 'Sem coleta') {
+    const ctN = normalizeTme(ct), ptN = normalizeTme(pt);
+    if(parseTmeToMin(ct) === parseTmeToMin(pt)) { lines.push('- O tempo médio de espera se manteve em ' + ctN + '.'); }
+    else { lines.push('- O tempo médio de espera ' + tmeDirection(pt, ct) + ' de ' + ptN + ' para ' + ctN + '.'); }
   }
-  if(curr.total>0){
-    const avg=+(curr.total/NUM_OPERATORS/7).toFixed(1);
-    lines.push(`- Média de atendimentos por operador/dia: ${avg}.`);
+  if(curr.total > 0) {
+    const avg = Math.round(curr.total / NUM_OPERATORS / 7 * 10) / 10;
+    lines.push('- Média de atendimentos por operador/dia: ' + avg + '.');
   }
   lines.push('');
 
@@ -637,84 +573,83 @@ function copyReport(){
   lines.push('');
   lines.push('| Indicador | Qtd | % |');
   lines.push('| --- | --- | --- |');
-  lines.push(`| **Total de chamados** | ${w.total} | — |`);
-  lines.push(`| ✅ Concluídos | ${w.conc} | ${pct(w.conc,w.total).toFixed(1)}% |`);
-  lines.push(`| 🔴 Escalonados | ${w.esc} | ${pct(w.esc,w.total).toFixed(1)}% |`);
-  lines.push(`| ⬜ Sem retorno do cliente | ${w.sem} | ${pct(w.sem,w.total).toFixed(1)}% |`);
-  lines.push(`| 🟡 Aguardando retorno do cliente | ${w.ag} | ${pct(w.ag,w.total).toFixed(1)}% |`);
-  if(w.cats.length)lines.push(`| **Top categoria** | ${w.cats[0][0]} — ${w.cats[0][1]} | ${pct(w.cats[0][1],w.total).toFixed(1)}% |`);
+  lines.push('| **Total de chamados** | ' + w.total + ' | — |');
+  lines.push('| ✅ Concluídos | ' + w.conc + ' | ' + pct(w.conc, w.total).toFixed(1) + '% |');
+  lines.push('| 🔴 Escalonados | ' + w.esc + ' | ' + pct(w.esc, w.total).toFixed(1) + '% |');
+  lines.push('| ⬜ Sem retorno do cliente | ' + w.sem + ' | ' + pct(w.sem, w.total).toFixed(1) + '% |');
+  lines.push('| 🟡 Aguardando retorno do cliente | ' + w.ag + ' | ' + pct(w.ag, w.total).toFixed(1) + '% |');
+  if(w.cats.length) lines.push('| **Top categoria** | ' + w.cats[0][0] + ' — ' + w.cats[0][1] + ' | ' + pct(w.cats[0][1], w.total).toFixed(1) + '% |');
   lines.push('');
   lines.push('| Canal | Qtd | % |');
   lines.push('| --- | --- | --- |');
-  Object.entries(w.canalCount).sort((a,b)=>b[1]-a[1]).forEach(([canal,cnt])=>{
-    lines.push(`| ${canal} | ${cnt} | ${pct(cnt,w.total).toFixed(1)}% |`);
+  Object.entries(w.canalCount).sort((a,b) => b[1]-a[1]).forEach(([canal, cnt]) => {
+    lines.push('| ' + canal + ' | ' + cnt + ' | ' + pct(cnt, w.total).toFixed(1) + '% |');
   });
   lines.push('');
 
   lines.push('## ⏱ Tempo médio de resolução — casos escalonados');
   lines.push('');
-  lines.push(w.tmeEsc!==null?fmtTime(w.tmeEsc):w.esc===0?'Sem casos escalonados na semana.':'N/D');
+  lines.push(w.tmeEsc !== null ? fmtTime(w.tmeEsc) : (w.esc === 0 ? 'Sem casos escalonados na semana.' : 'N/D'));
   lines.push('');
 
   lines.push('## 📂 Chamados por Categoria');
   lines.push('');
   lines.push('| Categoria | Chamados | % do total |');
   lines.push('| --- | --- | --- |');
-  w.cats.forEach(([cat,cnt])=>{lines.push(`| ${cat} | ${cnt} | ${pct(cnt,w.total).toFixed(1)}% |`);});
+  w.cats.forEach(([cat, cnt]) => { lines.push('| ' + cat + ' | ' + cnt + ' | ' + pct(cnt, w.total).toFixed(1) + '% |'); });
   lines.push('');
 
   lines.push('## 🗂️ Amostra de Casos — Top 10 Categorias');
   lines.push('');
-  w.top10.forEach(([cat])=>{
-    lines.push(`### ${cat}`);
+  w.top10.forEach(([cat]) => {
+    lines.push('### ' + cat);
     lines.push('');
-    w.cases[cat].forEach(r=>{
-      lines.push(`**Protocolo:** ${r[C.proto]}`);
-      lines.push(`**Atendente:** ${r[C.atendente]||'—'}`);
-      lines.push(`**Status:** ${r[C.status]||'—'}`);
-      if(r[C.descricao])lines.push(`**Descrição:** ${r[C.descricao]}`);
-      const cL=(r[C.linkCrisp]||'').trim(),eL=(r[C.linkEsc]||'').trim();
-      if(cL&&cL!=='—')lines.push(`**Link Crisp:** ${cL}`);
-      if(eL&&eL!=='—'&&eL)lines.push(`**Escalonamento:** ${eL}`);
+    w.cases[cat].forEach(r => {
+      lines.push('**Protocolo:** ' + r[C.proto]);
+      lines.push('**Atendente:** ' + (r[C.atendente] || '—'));
+      lines.push('**Status:** ' + (r[C.status] || '—'));
+      if(r[C.descricao]) lines.push('**Descrição:** ' + r[C.descricao]);
+      const cL = (r[C.linkCrisp] || '').trim(), eL = (r[C.linkEsc] || '').trim();
+      if(cL && cL !== '—') lines.push('**Link Crisp:** ' + cL);
+      if(eL && eL !== '—' && eL) lines.push('**Escalonamento:** ' + eL);
       lines.push('');
       lines.push('---');
       lines.push('');
     });
   });
 
-  const text=lines.join('\n');
-  const fb=document.getElementById('copy-feedback');
-  // Try modern API first, fall back to execCommand for file:// context
-  if(navigator.clipboard&&window.isSecureContext){
-    navigator.clipboard.writeText(text).then(()=>{
-      fb.textContent='✓ Relatório copiado! Cole no Notion com Ctrl+V (ou Cmd+V).';
-      setTimeout(()=>{fb.textContent='';},4000);
-    }).catch(()=>fallbackCopy(text,fb));
+  const text = lines.join('\n');
+  const fb = document.getElementById('copy-feedback');
+  if(navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text).then(() => {
+      fb.textContent = '✓ Relatório copiado! Cole no Notion com Ctrl+V (ou Cmd+V).';
+      setTimeout(() => { fb.textContent = ''; }, 4000);
+    }).catch(() => fallbackCopy(text, fb));
   } else {
-    fallbackCopy(text,fb);
+    fallbackCopy(text, fb);
   }
 }
 
-function fallbackCopy(text,fb){
-  const ta=document.createElement('textarea');
-  ta.value=text;
-  ta.style.cssText='position:fixed;top:0;left:0;opacity:0;pointer-events:none;';
+function fallbackCopy(text, fb) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;pointer-events:none;';
   document.body.appendChild(ta);
-  ta.focus();ta.select();
-  try{
+  ta.focus(); ta.select();
+  try {
     document.execCommand('copy');
-    fb.textContent='✓ Relatório copiado! Cole no Notion com Ctrl+V (ou Cmd+V).';
-    setTimeout(()=>{fb.textContent='';},4000);
-  }catch(e){
-    fb.textContent='Não foi possível copiar automaticamente. Selecione o texto manualmente.';
+    fb.textContent = '✓ Relatório copiado! Cole no Notion com Ctrl+V (ou Cmd+V).';
+    setTimeout(() => { fb.textContent = ''; }, 4000);
+  } catch(e) {
+    fb.textContent = 'Não foi possível copiar automaticamente.';
   }
   document.body.removeChild(ta);
 }
 
-function setLog(type,msg,cls){
-  const ids={csv:'csv-log',url:'url-log'};
-  const el=document.getElementById(ids[type]);
-  if(el){el.textContent=msg;el.className='log'+(cls?' '+cls:'');}
+function setLog(type, msg, cls) {
+  const ids = { csv: 'csv-log', url: 'url-log' };
+  const el = document.getElementById(ids[type]);
+  if(el) { el.textContent = msg; el.className = 'log' + (cls ? ' ' + cls : ''); }
 }
 </script>
 </body>
