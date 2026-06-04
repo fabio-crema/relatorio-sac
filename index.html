@@ -306,7 +306,7 @@ function handleQLFile(file) {
     try {
       qlData = parseCSVGeneric(e.target.result);
       if(!qlData.length) throw new Error('Nenhum dado encontrado.');
-      const lbl = document.getElementById('drop-zone-ql-proto').nextElementSibling;
+
       const qlDZ = document.getElementById('drop-zone-ql'); if(qlDZ) qlDZ.innerHTML = '<div class="dz-icon" style="font-size:22px;margin-bottom:6px;">✅</div><div style="font-size:13px;font-weight:500;">' + file.name + '</div><div class="hint">' + qlData.length + ' registros carregados</div>';
       setLog('ql', '', 'ok');
       if(currentData) renderQL();
