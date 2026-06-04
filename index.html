@@ -60,7 +60,6 @@
   button:active { transform: scale(0.98); }
   button:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
   .btn-load { background: var(--accent); color: #fff; }
-  .btn-insights { background: var(--accent); color: #fff; width: 100%; justify-content: center; margin-top: 10px; }
   .btn-copy { background: #1a1a1a; color: #fff; width: 100%; justify-content: center; padding: 14px 18px; font-size: 14px; }
 
   .info-box { margin-top: 10px; background: var(--accent-bg); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 13px; color: var(--accent-text); line-height: 1.55; }
@@ -121,12 +120,6 @@
   .badge-wait { background: var(--warn-bg); color: var(--warn-text); }
   .badge-none { background: var(--surface2); color: var(--text2); border: 1px solid var(--border); }
 
-  .insights-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; }
-  .insights-loading { font-size: 13px; color: var(--text2); font-style: italic; }
-  .insight-item { margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
-  .insight-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
-  .insight-label { font-size: 12px; font-weight: 600; color: var(--accent); font-family: var(--mono); margin-bottom: 4px; }
-  .insight-text { font-size: 14px; line-height: 1.6; color: var(--text); }
 
   .copy-feedback { font-size: 12px; font-family: var(--mono); color: var(--success-text); margin-top: 8px; min-height: 18px; text-align: center; }
   hr.divider { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
@@ -212,14 +205,6 @@
     </div>
 
     <div class="section">
-      <div class="section-title">💡 Análise e insights</div>
-      <div class="insights-box" id="insights-box">
-        <div class="insights-loading">Clique em "Gerar insights com IA" abaixo.</div>
-      </div>
-      <button class="btn-insights" id="insights-btn" onclick="generateInsights()">✨ Gerar insights com IA</button>
-    </div>
-
-    <div class="section">
       <div class="section-title">🗂️ Amostra de casos — top 10 categorias</div>
       <div class="card" id="casos-section"></div>
     </div>
@@ -248,7 +233,6 @@ const C = {
 let parsedData = [];
 let currentData = null;
 let weeksData = [];
-let insightsText = [];
 
 function switchTab(tab) {
   document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',(i===0&&tab==='csv')||(i===1&&tab==='url')));
@@ -374,7 +358,6 @@ function processWeek(rows,start,end){
 }
 
 function initWeeks(rows){
-  insightsText=[];
   const today=new Date();
   weeksData=[];
   for(let i=0;i<4;i++){
@@ -411,8 +394,6 @@ function getManualTMEs(){
 }
 
 function renderAll(){
-  document.getElementById('insights-box').innerHTML='<div class="insights-loading">Clique em "Gerar insights com IA" abaixo.</div>';
-  insightsText=[];
   renderTrend(weeksData);
   renderKPI(weeksData[0]);
   renderTMEesc(weeksData[0]);
@@ -544,24 +525,6 @@ function renderCases(w){
   }).join('');
 }
 
-/* ── AI insights ── */
-async function generateInsights(){
-  if(!currentData)return;
-  const btn=document.getElementById('insights-btn');
-  btn.disabled=true;btn.textContent='Gerando insights...';
-  document.getElementById('insights-box').innerHTML='<div class="insights-loading">A IA está analisando os dados...</div>';
-
-  const w=currentData;
-  const tmes=getManualTMEs();
-  const pct=(n,t)=>t?+(n/t*100).toFixed(1):0;
-  const topCats=w.cats.slice(0,5).map(([c,n])=>`${c} (${n}, ${pct(n,w.total)}%)`).join(', ');
-  const escCases=w.rows.filter(r=>isEsc(r)).map(r=>`- ${r[C.proto]||''} | ${r[C.categoria]||''}: ${r[C.descricao]||''}`).join('\n');
-  const avg=+(w.total/NUM_OPERATORS/7).toFixed(1);
-
-  const prompt=`Você é analista de SAC da Kiwipay, uma fintech brasileira de pagamentos.
-
-Dados da semana (${fmt(w.start)} a ${fmt(w.end)}):
-- Total de chamados: ${w.total}
 - Concluídos: ${w.conc} (${pct(w.conc,w.total)}%)
 - Escalonados: ${w.esc} (${pct(w.esc,w.total)}%)
 - Sem retorno: ${w.sem} | Aguardando: ${w.ag}
@@ -577,7 +540,6 @@ Regras importantes:
 2. Para "IA do Crisp", use o número ${w.iaCrisp} como total de atendimentos da IA esta semana.
 3. Seja direto, analítico e específico. Escreva em português do Brasil.
 
-Gere exatamente 3 insights no seguinte formato JSON (responda APENAS o JSON, sem markdown, sem texto extra):
 [
   {"label": "Principais assuntos da semana", "text": "..."},
   {"label": "Casos Escalonados", "text": "..."},
@@ -585,7 +547,6 @@ Gere exatamente 3 insights no seguinte formato JSON (responda APENAS o JSON, sem
 ]`;
 
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})
@@ -593,15 +554,8 @@ Gere exatamente 3 insights no seguinte formato JSON (responda APENAS o JSON, sem
     const data=await res.json();
     const raw=(data.content||[]).map(b=>b.text||'').join('');
     const parsed=JSON.parse(raw.replace(/```json|```/g,'').trim());
-    insightsText=parsed;
-    document.getElementById('insights-box').innerHTML=parsed.map(item=>`
-      <div class="insight-item">
-        <div class="insight-label">${item.label}</div>
-        <div class="insight-text">${item.text}</div>
       </div>`).join('');
-    btn.textContent='↺ Regenerar insights';btn.disabled=false;
   }catch(e){
-    document.getElementById('insights-box').innerHTML=`<div class="insights-loading" style="color:var(--danger-text)">Erro: ${e.message}</div>`;
     btn.textContent='↺ Tentar novamente';btn.disabled=false;
   }
 }
@@ -676,15 +630,6 @@ function copyReport(){
   lines.push('| --- | --- | --- |');
   w.cats.forEach(([cat,cnt])=>{lines.push(`| ${cat} | ${cnt} | ${pct(cnt,w.total).toFixed(1)}% |`);});
   lines.push('');
-
-  if(insightsText.length){
-    lines.push('## 💡 Análise e Insights');
-    lines.push('');
-    insightsText.forEach(item=>{
-      lines.push(`- **${item.label}:** ${item.text}`);
-    });
-    lines.push('');
-  }
 
   lines.push('## 🗂️ Amostra de Casos — Top 10 Categorias');
   lines.push('');
