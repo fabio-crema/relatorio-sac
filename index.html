@@ -122,6 +122,18 @@
 
 
   .copy-feedback { font-size: 12px; font-family: var(--mono); color: var(--success-text); margin-top: 8px; min-height: 18px; text-align: center; }
+
+  /* toggles */
+  .toggle { border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 8px; overflow: hidden; }
+  .toggle-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; cursor: pointer; user-select: none; background: var(--surface2); transition: background 0.15s; }
+  .toggle-header:hover { background: var(--border); }
+  .toggle-title { font-size: 13px; font-weight: 600; color: var(--text); }
+  .toggle-count { font-size: 11px; font-family: var(--mono); color: var(--text3); margin-left: 8px; }
+  .toggle-arrow { font-size: 11px; color: var(--text3); transition: transform 0.2s; }
+  .toggle-arrow.open { transform: rotate(90deg); }
+  .toggle-body { display: none; padding: 12px 14px; background: var(--surface); }
+  .toggle-body.open { display: block; }
+
   hr.divider { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
 </style>
 </head>
@@ -166,7 +178,7 @@
   <div class="section">
     <div class="section-title">2. Tempo de espera das últimas 4 semanas</div>
     <div class="card">
-      <p style="font-size:13px;color:var(--text2);margin-bottom:14px;line-height:1.5;">Informe o TME de cada semana coletado na sua plataforma. Use o formato <code style="font-family:var(--mono);background:var(--surface2);padding:1px 5px;border-radius:3px;">36min</code>, <code style="font-family:var(--mono);background:var(--surface2);padding:1px 5px;border-radius:3px;">1h 20min</code> ou deixe em branco para "Sem coleta".</p>
+      <p style="font-size:13px;color:var(--text2);margin-bottom:14px;line-height:1.5;">Informe o tempo de espera de cada semana em <strong>minutos</strong> (ex: <code style="font-family:var(--mono);background:var(--surface2);padding:1px 5px;border-radius:3px;">36</code>). Deixe em branco para "Sem coleta".</p>
       <div class="tme-grid" id="tme-grid">
         <div style="font-size:13px;color:var(--text3);font-style:italic;grid-column:1/-1;">Carregue o CSV primeiro para ver as semanas.</div>
       </div>
@@ -206,7 +218,7 @@
 
     <div class="section">
       <div class="section-title">🗂️ Amostra de casos — top 10 categorias</div>
-      <div class="card" id="casos-section"></div>
+      <div id="casos-section"></div>
     </div>
 
     <hr class="divider">
@@ -375,7 +387,7 @@ function initWeeks(rows){
     const div=document.createElement('div');
     div.className='tme-field'+(isCurrent?' current':'');
     div.innerHTML=`<label>${fmtShort(w.start)} a ${fmtShort(w.end)}<span>${isCurrent?'semana atual':''}</span></label>
-      <input type="text" id="tme-manual-${i}" placeholder="Sem coleta" />`;
+      <input type="text" id="tme-manual-${i}" placeholder="min" />`;
     grid.appendChild(div);
   });
 
@@ -411,7 +423,8 @@ function renderTrend(weeks){
   </tr></thead><tbody>`;
   reversed.forEach((w,i)=>{
     const isCurrent=(i===3);
-    const tmeVal=tmes[i]||'Sem coleta';
+    const rawTme=tmes[i]||'';
+    const tmeVal=rawTme?((!isNaN(rawTme.trim())?rawTme.trim()+'min':rawTme)):'Sem coleta';
     html+=`<tr class="${isCurrent?'current':''}">
       <td>${fmtShort(w.start)} a ${fmtShort(w.end)}${isCurrent?' ★':''}</td>
       <td>${w.total}</td>
@@ -450,6 +463,11 @@ function renderTrend(weeks){
 }
 
 /* try to detect if tme went up or down by parsing min values */
+function normalizeTme(str){
+  if(!str)return'';
+  const s=str.trim();
+  return !isNaN(s)?s+'min':s;
+}
 function parseTmeToMin(str){
   if(!str)return null;
   const s=str.toLowerCase().replace(/\s/g,'');
@@ -510,7 +528,8 @@ function badge(s){
 }
 
 function renderCases(w){
-  document.getElementById('casos-section').innerHTML=w.top10.map(([cat])=>{
+  document.getElementById('casos-section').innerHTML=w.top10.map(([cat],idx)=>{
+    const cnt=w.cases[cat].length;
     const items=w.cases[cat].map(r=>{
       const cL=(r[C.linkCrisp]||'').trim(),eL=(r[C.linkEsc]||'').trim();
       return`<div class="chamado">
@@ -521,8 +540,21 @@ function renderCases(w){
         ${r[C.descricao]?`<div class="desc">${r[C.descricao]}</div>`:''}
       </div>`;
     }).join('');
-    return`<div class="cat-group"><div class="cat-group-title">${cat}</div>${items}</div>`;
+    return`<div class="toggle" id="toggle-${idx}">
+      <div class="toggle-header" onclick="toggleCase(${idx})">
+        <span><span class="toggle-title">${cat}</span><span class="toggle-count">${cnt} exemplo${cnt!==1?'s':''}</span></span>
+        <span class="toggle-arrow" id="arrow-${idx}">▶</span>
+      </div>
+      <div class="toggle-body" id="tbody-${idx}">${items}</div>
+    </div>`;
   }).join('');
+}
+
+function toggleCase(idx){
+  const body=document.getElementById('tbody-'+idx);
+  const arrow=document.getElementById('arrow-'+idx);
+  const open=body.classList.toggle('open');
+  arrow.classList.toggle('open',open);
 }
 
 - Concluídos: ${w.conc} (${pct(w.conc,w.total)}%)
