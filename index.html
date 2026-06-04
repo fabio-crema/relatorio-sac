@@ -364,15 +364,44 @@ function parseCSV(text) {
   }).filter(r => r[C.proto] || r['Data']);
 }
 
-// Generic CSV parser that doesn't filter by proto (for QL sheet)
+// Generic CSV parser that handles newlines inside quoted fields (for QL sheet)
 function parseCSVGeneric(text) {
-  const lines = text.split('\n').filter(l => l.trim());
-  const headers = splitLine(lines[0]);
+  // First, merge lines that are inside quoted fields
+  const merged = mergeQuotedLines(text);
+  const lines = merged.split('\n').filter(l => l.trim());
+  const headers = splitLine(lines[0]).map(h => h.replace(/[\n\r]/g,'').trim());
   return lines.slice(1).map(line => {
     const vals = splitLine(line), obj = {};
-    headers.forEach((h, i) => { obj[h.replace(/[\n\r]/g,'').trim()] = (vals[i] || '').trim(); });
+    headers.forEach((h, i) => { obj[h] = (vals[i] || '').trim(); });
     return obj;
   }).filter(r => Object.values(r).some(v => v));
+}
+
+function mergeQuotedLines(text) {
+  const result = [];
+  let current = '';
+  let inQuote = false;
+  for(let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if(ch === '"') { inQuote = !inQuote; current += ch; }
+    else if((ch === '\n' || ch === '\r') && inQuote) {
+      // newline inside a quoted field — replace with space and keep merging
+      current += ' ';
+      // skip 
+ pair
+      if(ch === '\r' && text[i+1] === '\n') i++;
+    } else if(ch === '\r' && text[i+1] === '\n' && !inQuote) {
+      current += '\n'; i++; // normalise CRLF
+    } else {
+      current += ch;
+    }
+    if((ch === '\n' || (ch === '\r' && text[i+1] !== '\n')) && !inQuote) {
+      result.push(current.replace(/[\r\n]/g,''));
+      current = '';
+    }
+  }
+  if(current.trim()) result.push(current);
+  return result.join('\n');
 }
 
 function splitLine(line) {
